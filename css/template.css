@@ -1,0 +1,32 @@
+h1 {
+	text-align: center;
+}
+
+div#template_source {
+	text-align: center;
+	padding: 0 50px 5px 50px;
+	margin: 0 50px 20px 50px;
+	border-bottom: 3px solid #ccc;
+}
+
+div#template_items {
+	margin-left: 75px;
+}
+
+div#template_items ul {
+	list-style-type: square;
+}
+
+div#template_items li {
+}
+
+table#form_table {
+	margin-left: 75px;
+	font-size: 1.3em;
+}
+
+table#form_table th {
+
+	font-weight: bold;
+	text-align: right;
+}

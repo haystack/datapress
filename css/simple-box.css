@@ -1,0 +1,13 @@
+/**************************************************
+ * Lens wrapper modified from
+ * http://www.webcredible.co.uk/user-friendly-resources/css/css-round-corners-borders.shtml
+ *************************************************/
+.dp-lenswrapper {
+    border: 2px solid #ccc;
+    padding: 3px;
+}
+
+.dpcontainer li {
+    padding: 3px;
+    margin-bottom: 10px;
+}

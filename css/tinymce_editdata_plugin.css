@@ -1,0 +1,6 @@
+span.dp_editdata {
+  display: inline-block;
+  width: 16px;
+  background-image: url('../images/database_link.png');
+  background-repeat: no-repeat;
+}

@@ -1,0 +1,15 @@
+div.cover {
+    opacity: 0.2; /* for Firefox, Safari, and others */
+    alpha(opacity = 20); /* for Internet Explorer */
+    color: black;
+    background-color: black;
+    background-image: url(../images/youtube-play.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1;
+    position: absolute;
+}
+
+div.teaser {
+    z-index: 0;
+}

@@ -1,0 +1,63 @@
+/**************************************************
+ * Lens wrapper modified from
+ * http://www.webcredible.co.uk/user-friendly-resources/css/css-round-corners-borders.shtml
+ *************************************************/
+
+.dp-lenswrapper .tl {
+    background:url(../images/pframe/tl.png) 0 0 no-repeat;
+    height: 37px;
+    width: 33px;
+    float: left;
+}
+
+.dp-lenswrapper .t {
+    float: left;    
+    background:url(../images/pframe/t.png) 0 0 repeat-x; 
+    min-width:2em;
+}
+
+.dp-lenswrapper .tr {
+    float: right;
+    background:url(../images/pframe/tr.png) 0 no-repeat; 
+    height: 37px;
+    width: 33px;
+}
+
+.dp-lenswrapper .l {
+    clear: both;
+    background:url(../images/pframe/l.png) 0 0 repeat-y;
+    min-height: 2em;
+    float: left;
+}
+
+.dp-lenswrapper .center {
+    background:url(../images/pframe/l.png) 0 0 repeat-y;
+    min-height: 20px;
+    float: left;
+}
+
+.dp-lenswrapper .r {
+    background:url(../images/pframe/r.png) 100% 0 repeat-y;
+    float: right;
+}
+
+.dp-lenswrapper .bl {
+    background: url(../images/pframe/bl.png) 0 100% no-repeat; 
+    width:20em;
+    height: 37px;
+    width: 33px;
+    float: left;
+}
+
+.dp-lenswrapper .b {
+    background:url(../images/pframe/b.png) 0 100% repeat-x;
+    margin: 0 0 2px 0;
+    float: left;
+}
+
+.dp-lenswrapper .br {
+    background:url(../images/pframe/br.png) 100% 100% no-repeat;
+    height: 37px;
+    width: 33px;
+    float: right;
+}

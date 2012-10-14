@@ -1,0 +1,13 @@
+/**************************************************
+ * Lens wrapper modified from
+ * http://www.webcredible.co.uk/user-friendly-resources/css/css-round-corners-borders.shtml
+ *************************************************/
+.dp-lenswrapper .bl {background:url(../images/simple-orange/bl.gif) 0 100% no-repeat; width:20em; text-align:center}
+.dp-lenswrapper .br {background:url(../images/simple-orange/br.gif) 100% 100% no-repeat}
+.dp-lenswrapper .tl {background:url(../images/simple-orange/tl.gif) 0 0 no-repeat}
+.dp-lenswrapper .tr {background:url(../images/simple-orange/tr.gif) 100% 0 no-repeat; padding:10px}
+.dp-lenswrapper .t {background:url(../images/simple-orange/dot.gif) 0 0 repeat-x; width:20em}
+.dp-lenswrapper .b {background:url(../images/simple-orange/dot.gif) 0 100% repeat-x;
+                    margin: 0 0 2px 0}
+.dp-lenswrapper .l {background:url(../images/simple-orange/dot.gif) 0 0 repeat-y}
+.dp-lenswrapper .r {background:url(../images/simple-orange/dot.gif) 100% 0 repeat-y}
