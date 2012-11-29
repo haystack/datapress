@@ -22,13 +22,13 @@ $exhibituri = $baseuri . '/wp-content/plugins/datapress';
     <tr>
 		<td>Facet Location Relative to View</td>	
 		<td>
-		  <select id="exhibit-facet-list-location">
-		    <option value="left">Left</option>
-		    <option value="right">Right</option>
-    		<option value="top">Top</option>
-    		<option selected value="bottom">Bottom</option>
-	  	    <option value="widget">Sidebar Widget</option>
-		  </select>
+		  	<select id="exhibit-facet-list-location">
+		    		<option value="left">Left</option>
+		    		<option value="right">Right</option>
+				<option value="top">Top</option>
+    				<option selected value="bottom">Bottom</option>
+	  	    		<option value="widget">Sidebar Widget</option>
+			</select>
 		</td>
 	</tr>	
 	<tr>
@@ -36,14 +36,30 @@ $exhibituri = $baseuri . '/wp-content/plugins/datapress';
 	    <td><select id="exhibit-facet-list-klass" class="alltypebox"></select></td>
 	    <td>(Optional)</td>
 	</tr>
+	<tr>
+	    <td><i>Location</i></td>
+	    <td><select id="exhibit-widget-location" class="allpropbox"></select></td>
+	    <td></td>
+	</tr>
+<!--    <tr>
+		<td>Widget Bar Location</td>	
+		<td>
+		  <select id="exhibit-widget-location">
+		    <option value="within">In Exhibit</option>
+		    <option value="sidebar">In Sidebar</option>
+		  </select>
+		</td>
+	</tr>	
+-->
 </table>
 <p align="right"><a href="#" class="addlink" onclick="submit_list_facet(); return false">Add List Facet</a></p>
 
 <script type="text/JavaScript">
 function submit_list_facet() {
 	var label = jQuery('#exhibit-facet-list-label').val();
-    var location = jQuery('#exhibit-facet-list-location').val();	
+   	var location = jQuery('#exhibit-facet-list-location').val();	
 	var kind = 'browse';
+	//var wlocation = jQuery('#exhibit-widget-location').val();
 	var field = jQuery('#exhibit-facet-list-field').val();
 	var klass = jQuery('#exhibit-facet-list-klass').val();
 	
@@ -51,12 +67,16 @@ function submit_list_facet() {
 			kind: kind,
 			label: label,
 			field: field,
-			location: location
+			location: location,
+	//		wlocation: wlocation
 	};
 	
 	if (klass != null) {
 		params['klass'] = klass;
 	}
+	/*if (wlocation!=null){
+		params['wlocation'] = wlocation;
+	}*/
 	
 	addExhibitElementLink(
 		"facet-list", 

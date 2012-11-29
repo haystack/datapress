@@ -36,7 +36,7 @@ if (isset($exhibits_to_show) && (count($exhibits_to_show) > 0)) {
  }
 }
 ?>
-	
+	//manage exhibits here! array of databases and exhibits	
     window.database = Exhibit.Database.create(); 
 
     // If we don't need geocoding, load data links with onAllDataLoaded callback.

@@ -22,6 +22,9 @@ include_once('data-editor/template-browser.php');
 include_once('data-editor/template-editor.php');
 include_once('wp-exhibit-geocoder.php');
 include_once('data-editor/save.php');
+//include_once('sidebar_widget.php');
+include_once('facet_widget.php');
+
 
 class WpExhibit {
  	var $wp_version;
@@ -41,7 +44,26 @@ class WpExhibit {
 	 * on the page. Else just include the other stuff
 	 */
 	function exhibit_include() {
-        include('head.php');
+        	include('head.php');
+	}
+	
+	function exhibit_include_one(){
+		include('head-exhibit.php');
+		include('head-datasources.php');
+	}
+
+	function exhibit_include_override(){
+		$mycount = 0;
+		foreach ($wp_query->posts as $mypost) {
+			if($mypost->datapress_exhibit != null){
+			$mycount += 1;
+			}
+		}
+		if($mycount == 1){
+			self::exhibit_include_one();
+		}else{
+			self::exhibit_include_one();
+		}
 	}
 	
 	function get_current_exhibit_from_admin_page() {
@@ -125,7 +147,12 @@ class WpExhibit {
         SaveExhibitConfiguration::save();
 	    die;
 	}
-
+	
+/*	function insert_sidebar(){
+	$testClass = 'sidebar_widget';
+	return $testClass::widget();
+	}	
+*/
   function make_exhibit_button() {
 	$ex = $this->get_current_exhibit_from_admin_page();
 	if ($ex == NULL) {
@@ -175,7 +202,7 @@ class WpExhibit {
 $exhibit = new WpExhibit();
 $exhibit->migrate_plugin();
 
-add_action('wp_head', array($exhibit, 'exhibit_include'));
+add_action('wp_head', array($exhibit, 'exhibit_include_override'));
 add_action('admin_head', array($exhibit, 'exhibit_admin_include'));
 add_action('admin_menu', array($exhibit, 'add_options_page'));
 
@@ -201,6 +228,8 @@ add_action('admin_notices', array($exhibit, 'privacy_notice'));
 add_filter('save_post', array($exhibit, 'save_post'), 10, 2);
 add_filter("mce_external_plugins", array($exhibit, 'tinymce_editdata_plugin'));
 add_filter("mce_css", array($exhibit, "tinymce_plugin_css"));
+//add_action('widgets_init','insert_sidebar');
+
 
 register_activation_hook(__FILE__, array($exhibit, 'activate_plugin'));
 register_deactivation_hook(__FILE__, array($exhibit, 'deactivate_plugin'));
@@ -244,5 +273,4 @@ wp_register_style( 'dp-configurator', "$wp_datapress_plugin_url/css/wpexhibit.cs
 wp_register_style( 'dp-jquery', "$wp_datapress_plugin_url/js/jQueryUI1.7.3/smoothness/jquery-ui-1.7.3.custom.css");
 wp_register_style( 'dp-template', "$wp_datapress_plugin_url/css/template.css");
 
-include_once('facet_widget.php');
 ?>

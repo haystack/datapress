@@ -7,7 +7,8 @@ class WpExhibitFacet extends WpExhibitModel {
 		'label' => NULL,
 		'exhibitid' => NULL,
 		'location' => NULL,
-		'klass' => NULL
+		'klass' => NULL,
+		'wlocation' => NULL
 	);
 	
 	function WpExhibitFacet($opts = NULL) {
@@ -43,8 +44,7 @@ class WpExhibitFacet extends WpExhibitModel {
 		$kind = $this->get('kind');
 		$field = $this->get('field');
 		$label = $this->get('label');
-		$klass = $this->get('klass');
-		
+		$klass = $this->get('klass');	
 		$collection_insert = '';
 		if ($klass != NULL) {
 			$collection_insert = "ex:collectionID='collection_$klass'";
@@ -56,9 +56,12 @@ class WpExhibitFacet extends WpExhibitModel {
 		if ($kind == "search") {
 			return "<div ex:role=\"facet\" $collection_insert ex:facetClass=\"TextSearch\" ex:facetLabel=\"$label\"></div>";
 		} else if ($kind == "browse") {
-			return "<div ex:role=\"facet\" $collection_insert ex:expression=\".$field\" ex:facetLabel=\"$label\"></div>";
+			return  "<div ex:role=\"facet\" $collection_insert ex:expression=\".$field\" ex:facetLabel=\"$label\"></div>";
+			
 		} else if ($kind == "tagcloud") {
 			return "<div ex:role=\"facet\" $collection_insert ex:facetClass=\"Cloud\" ex:expression=\".$field\" ex:facetLabel=\"$label\"></div>";		
+		}else{
+			return "broken facet";
 		}
 	}
 	
