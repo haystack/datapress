@@ -15,11 +15,10 @@ class WpExhibitHtmlBuilder {
 		}		
 		if ($exhibit->get('lightbox')) {
 			$exhibit_string = self::get_exhibit_lightbox_link($exhibit);
-		} elseif($mycount>1) {
-	        	$exhibit_string = self::get_inline_exhibit($exhibit);
+		} elseif($mycount==1) {
+	  		$exhibit_string = self::get_exhibit_html($exhibit,'pageview',31);
 		} else{
-			$exhibit_string = self::get_exhibit_html($exhibit,'pageview',$postid);
-
+			$exhibit_string = self::get_inline_exhibit($exhibit);
 		}
         if (is_feed()) {
             $postid = $wp_query->post->ID;

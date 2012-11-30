@@ -2,7 +2,7 @@
 global $exhibits_to_show;
 
 if (count($exhibits_to_show) == 1) {
-    if ((! $exhibits_to_show[0]->get('lightbox')) || (isset($lightboxed_exhibit))) {
+   // if ((! $exhibits_to_show[0]->get('lightbox')) || (isset($lightboxed_exhibit))) {
         $google_map_api_key = get_option( 'google_map_api_key' );
         $plugin_dir = trailingslashit( get_bloginfo('wpurl') ).PLUGINDIR.'/datapress';    
 
@@ -36,7 +36,7 @@ if (count($exhibits_to_show) == 1) {
     	echo('<script type="text/javascript">');
     	include('head-start-exhibit.js.php');    
     	echo('</script>');
-    }
+    //}
 }
 
 ?>

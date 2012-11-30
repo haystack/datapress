@@ -23,13 +23,21 @@ else {
     }	
 }
 
+//echo count(exhibits_to_show);
+//die;
+
 /*
  * Now determine which sub-parts to include
  */
 if (isset($lightboxed_exhibit) && ($lightboxed_exhibit != NULL)) {
-    // Weire inside the lightbox
+    // We're inside the lightbox 
     	include('head-exhibit.php');
     	include('head-datasources.php');
+}
+else if(count($exhibits_to_show)==1){
+   //We're only exhibit on page
+	include('head-exhibit.php');
+	include('head-datasources.php');
 }
 else {
     // We're not inside the lightbox

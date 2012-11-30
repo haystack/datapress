@@ -60,9 +60,9 @@ class WpExhibit {
 			}
 		}
 		if($mycount == 1){
-			self::exhibit_include_one();
+			self::exhibit_include();
 		}else{
-			self::exhibit_include_one();
+			self::exhibit_include();
 		}
 	}
 	
