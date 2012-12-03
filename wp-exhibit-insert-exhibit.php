@@ -33,8 +33,8 @@ class WpExhibitHtmlBuilder {
 	    $exhibituri = $baseuri . '/wp-content/plugins/datapress';
 	    $exhibitid = $exhibit->get('id');
 	    $postid = $wp_query->post->ID;
-	    $exhibit_html .= "<a href='$exhibituri/wp-exhibit-only.php?iframe&exhibitid=$exhibitid&postid=$postid&currentview=lightbox' class='exhibit_link_$exhibitid'>";
-                    $exhibit_html .= "<div class='teaser' id='teaser_$exhibitid'>
+	    $exhibit_html = "<a href='$exhibituri/wp-exhibit-only.php?iframe&exhibitid=$exhibitid&postid=$postid&currentview=lightbox' class='exhibit_link_$exhibitid'>";
+      $exhibit_html .= "<div class='teaser' id='teaser_$exhibitid'>
                                       <iframe src='$exhibituri/wp-exhibit-only.php?iframe&exhibitid=$exhibitid&postid=$postid&currentview=preview' width='100%' height='300' scrolling='no' frameborder='0'>
                                       <p>Your browser does not support iframes.</p>
                                       </iframe>
