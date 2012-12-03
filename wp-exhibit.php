@@ -47,11 +47,11 @@ class WpExhibit {
         	include('head.php');
 	}
 	
-	function exhibit_include_one(){
+/*	function exhibit_include_one(){
 		include('head-exhibit.php');
 		include('head-datasources.php');
 	}
-
+*/
 	function exhibit_include_override(){
 		$mycount = 0;
 		foreach ($wp_query->posts as $mypost) {
