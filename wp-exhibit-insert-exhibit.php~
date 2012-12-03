@@ -16,17 +16,17 @@ class WpExhibitHtmlBuilder {
 		if ($exhibit->get('lightbox')) {
 			$exhibit_string = self::get_exhibit_lightbox_link($exhibit);
 		} elseif($mycount==1) {
-	  		$lightboxed_exhibit = new WpPostExhibit();
+	  		/*$lightboxed_exhibit = new WpPostExhibit();
         		DbMethods::loadFromDatabase($lightboxed_exhibit, $exhibitid);
 			$currentview = $_GET['currentview'];
-    			$postid = $_GET['postid'];
-  			$exhibit_string = self::get_exhibit_html($lightboxed_exhibit, $currentview, $postid);
+    			$postid = $_GET['postid'];*/
+  			$exhibit_string = self::get_exhibit_html($exhibit, $currentview, $postid);
 			echo $exhibit_string;
-			echo "I died";
-			die;
+			//echo "I died";
+			//die;
 		} else{
 			$exhibit_string = self::get_inline_exhibit($exhibit);
-			echo "else oops";
+			//echo "else oops";
 		}
         if (is_feed()) {
             $postid = $wp_query->post->ID;
@@ -106,7 +106,7 @@ class WpExhibitHtmlBuilder {
                
         // add views
         $view_html = "";
-
+	
         if ($currentView == 'preview') {
           foreach ($exhibit->get('views') as $view) {
              $view_html .= $view->htmlContent();
@@ -115,14 +115,19 @@ class WpExhibitHtmlBuilder {
         
         }
         else {
-
+	
         $grouped_html = "";
-
+	print_r($exhibit->get('views'));
+	die;
         foreach ($exhibit->get('views') as $view) {
             if ($view->get('ungrouped') == NULL) {
-                $grouped_html .= "\n" . $view->htmlContent();
+		                
+		$grouped_html .= "\n" . $view->htmlContent();			
+		
             }
         }
+	echo $grouped_html;
+	die;
         $printedGroup = 0;
         foreach ($exhibit->get('views') as $view) {
             if (($view->get('ungrouped') == NULL) && (0 == $printedGroup)) {
@@ -179,8 +184,8 @@ class WpExhibitHtmlBuilder {
             }
 
             $exhibit_html = "
-                $custom_html
-                $lens_html
+                $custom_html            
+		$lens_html
                 <table class=\"dpcontainer\" width=\"100%\">
                     <tr>
                         <td colspan='3'>
