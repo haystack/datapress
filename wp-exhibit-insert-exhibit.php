@@ -17,8 +17,14 @@ class WpExhibitHtmlBuilder {
             $permalink = get_permalink($postid);
             $exhibit_string .= "<p><b>Note: This post contains a interactive data presentation that may not show up in your feed reader.</b> For the full experience, visit <a href='$permalink'>this article</a> in your web browser.</p>";
         }
+	if (!$guessurl = site_url())
+    		$guessurl = wp_guess_url();
+    		$exhibituri = $guessurl . '/wp-content/plugins/datapress';
+    		$imageurl = $exhibituri . '/exhibit.png';   	
+	
+	
 
-        $content = str_replace("{{Exhibit}}", $exhibit_string, $content);
+        $content = str_replace('<img src="' . $imageurl . '" alt="Your Exhibit" width="70" height="70" />', $exhibit_string, $content);
         $footnotes_string = self::get_data_footnotes_html($exhibit);
         $content = str_replace("{{Footnotes}}", $footnotes_string, $content);            
       
