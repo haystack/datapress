@@ -1,5 +1,5 @@
 <?php
-	ob_start();
+/*	ob_start();
       $root = dirname(dirname(dirname(dirname(__FILE__))));
       if (file_exists($root.'/wp-load.php')) {
           // WP 2.6
@@ -10,7 +10,7 @@
       }
 	ob_end_clean(); //Ensure we don't have output from other plugins.
 	header('Content-Type: text/html; charset='.get_option('blog_charset'));
-
+*/
     /*
      * Load up the lightboxed exhibit
      */

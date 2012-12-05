@@ -26,7 +26,7 @@ class WpExhibitHtmlBuilder {
 		//DbMethods::loadFromDatabase($exhibit,$exhibitid);
 		$exhibit_html = $exhibit_html = self::get_exhibit_html($exhibit, "", $postid); 
 		echo $exhibit_html;
-		//die;		
+		die;		
 		}
 		else {
 		/*

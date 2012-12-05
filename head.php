@@ -106,9 +106,10 @@ if (count($exhibits_to_show) == 0) {
       // inside an IFRAME.
       //
       // TODO(daniel): Possibly include all the exhibit stuff here:
-      //  $datapressHead->print_exhibit_library_links();
-      //  $datapressHead->print_exhibit_specific_links($exhibit);
-      //  $datapressHead->print_exhibit_bootup_code();
+      	$datapressHead->print_exhibit_library_links();
+      	$datapressHead->print_exhibit_specific_links($exhibit);
+      	$datapressHead->print_exhibit_specific_datasources($exhibit);
+	$datapressHead->print_exhibit_bootup_code();
       //
       // TODO(daniel): Make a corresponding change where the exhibit is
       // actually printed to remove the IFRAME tag **for only this case**
