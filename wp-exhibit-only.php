@@ -23,7 +23,7 @@
     }
     $currentview = $_GET['currentview'];
     $postid = $_GET['postid'];
-    $exhibit_html = $exhibit_html = WpExhibitHtmlBuilder::get_exhibit_html($lightboxed_exhibit, $currentview, $postid);
+    $exhibit_html = $exhibit_html = WpExhibitHtmlBuilder::get_exhibit_html($lightboxed_exhibit, $currentview, $postid, true);
     //echo $exhibit_html;
     //die;
 ?>
