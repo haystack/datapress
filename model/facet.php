@@ -39,7 +39,7 @@ class WpExhibitFacet extends WpExhibitModel {
 		return $this->getShortKind() . ": " . $this->get('label');
 	}	
 	
-	function htmlContent($showLabel) {
+	function htmlContent($showLabel = true) {
 		$kind = $this->get('kind');
 		$field = $this->get('field');
     $label = $this->get('label');
