@@ -47,7 +47,7 @@ class WpExhibitHtmlBuilder {
 	
 
         $content = str_replace('<img src="' . $imageurl . '" alt="Your Exhibit" width="70" height="70" />', $exhibit_string, $content);
-        $footnotes_string = self::get_data_footnotes_html($exhibit);
+        $footnotes_string =""; // self::get_data_footnotes_html($exhibit);
         $content = str_replace('<img src="' . $footnotesurl . '" alt="Your Footnotes" width="70" height="70" />', $footnotes_string, $content);            
       
         return $content;
