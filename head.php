@@ -128,9 +128,9 @@ if (count($exhibits_to_show) == 0) {
   $needLightboxLibrary = false;
 
   // Print out web scraping links.
-  foreach ($exhibit as $exhibit_to_show) {
+  foreach ($exhibits_to_show as $exhibit) {
     $datapressHead->print_exhibit_specific_datasources($exhibit);
-    if ($exhibit->lightbox) {
+    if ($exhibit->get('lightbox', true)) {
       $needLightboxLibrary = true;
     }
   }

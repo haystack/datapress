@@ -131,8 +131,9 @@ class WpExhibitHtmlBuilder {
         return "$tracker_html $view_html";
 	}
 
-    static function get_exhibit_html($exhibit, $currentView, $postid) {	
-        $view_html = self::get_view_html($exhibit, $currentView, $postid);
+    static function get_exhibit_html($exhibit, $currentView, $postid, $includeWidgetFacets=false) {	
+      $view_html = self::get_view_html($exhibit, $currentView, $postid);
+      $widgetIsntAvailable = false;
         
         $lens_html = "";
         foreach ($exhibit->get('lenses') as $lens) {
@@ -147,9 +148,9 @@ class WpExhibitHtmlBuilder {
             $bottom_facet_html = self::facet_html($exhibit->get('facets'), 'bottom');
             $left_facet_html = self::facet_html($exhibit->get('facets'), 'left');
             $right_facet_html = self::facet_html($exhibit->get('facets'), 'right');
-            if ($exhibit->get('lightbox')) {
+            if ($includeWidgetFacets) {
 	            $right_facet_html .= self::facet_html($exhibit->get('facets'), 'widget');	
-		    }
+		        }
 
             $exhibit_colspan = 3;
             if (strlen($left_facet_html) > 0) {
