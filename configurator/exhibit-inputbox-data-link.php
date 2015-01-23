@@ -90,6 +90,13 @@ $exhibituri = $baseuri . '/wp-content/plugins/datapress';
         
 	jQuery(function() {
 		jQuery.getJSON("<?php bloginfo('wpurl'); ?>/wp-admin/admin-ajax.php?action=import_datafiles&url=" + encodeURIComponent(uri) + "&name=" + encodeURIComponent(sourcename) + "&type=" + encodeURIComponent(kind), function(json) {
+            // Process Debug information
+			if (json.debugging) {
+				for (var i=0; i<json.debugging.length; i++) {;
+					console.log(json.debugging[i]);
+				}
+			}
+
             // Process Errors
             if (json.errors) {
                 for (var i=0; i<json.errors.length; i++) {

@@ -1,7 +1,7 @@
 <?php
 require_once('web-tools.php');
 
-function send_back($links, $errors, $warnings) {
+function send_back($links, $errors, $warnings, $debugging = null) {
     $response = array();
     if ($links != null) {
         $response["links"] = $links;
@@ -13,6 +13,9 @@ function send_back($links, $errors, $warnings) {
     if ($warnings != null) {
         $response["warnings"] = $warnings;
     }
+	if ($debugging != null) {
+		$response["debugging"] = $debugging;
+	}
     echo(json_encode($response));
 }
 
@@ -31,30 +34,44 @@ function is_exhibit($type) {
 function scrape_google_spreadsheet($url, $type, $contents, $name) {
     // match: https://docs.google.com/spreadsheet/pub?key=0AnWPOdSwW93adGtnM2lEY0R1TlNxcGJPZmJ2TkRPOHc&output=html
     $pattern = "/pub\?.*key=([^&]+)/";
+	// match: https://docs.google.com/spreadsheets/d/1mbYtgzvP0Zv7Glc7pBjV3FBj2EIflPY37URRsfSikVQ/pubhtml
+	$pattern2 = "/\/d\/([^&]+)\/pubhtml/";
 
     $linkdatas = array();
     $errors = array();
     $warnings = array();
+	$debugging = array();
     $url = urldecode($url);
     $matched = preg_match_all($pattern, $url, $ids, PREG_PATTERN_ORDER);
-    if (!$matched) {
-	if (strpos($url, "json-in-script") === false) {
-	    array_push($warnings, "Unable to parse spreadsheet ID.  URL should be of the form https://docs.google.com/spreadsheet/pub?key=SPREADSHEET_ID&output=html");
-        } else {
+	$matched2 = preg_match_all($pattern2, $url, $ids_2, PREG_PATTERN_ORDER);
+	// debugging
+		$matched_string = ($matched) ? "Matched 1" : "false";
+		$matched_string2 = ($matched2) ? "Matched 2" : "false";
+		array_push($debugging, $matched_string);
+		array_push($debugging, $matched_string2);
+	// end debugging
+    if (!$matched && !$matched2) {
+
+		if (strpos($url, "json-in-script") === false) {
+			//enters this if spreadsheet url is not exactly what is expected (new Sheets link is /d/).
+			//try/catch with Google API
+			array_push($warnings, "Unable to parse spreadsheet ID.  URL should be of the form https://docs.google.com/spreadsheet/pub?key=SPREADSHEET_ID&output=html");
+		} else {
      	    $linkdata = array();
     	    $linkdata["href"] = $url;
-	    $linkdata["kind"] = "google-spreadsheet";
-	    $linkdata["alt"] = $name;
-	    array_push($linkdatas, $linkdata);        
+	    	$linkdata["kind"] = "google-spreadsheet";
+	    	$linkdata["alt"] = $name;
+	    	array_push($linkdatas, $linkdata);
         }
     } else {
-	$linkdata = array();
-	$linkdata["href"] = "https://spreadsheets.google.com/feeds/list/" . $ids[1][0] . "/od6/public/basic?hl=en_US&alt=json-in-script";
-	$linkdata["kind"] = "google-spreadsheet";
-	$linkdata["alt"] = $name;
-	array_push($linkdatas, $linkdata);
+		$sheetid = !$matched ? $ids_2[1][0] : $ids[1][0];
+		$linkdata = array();
+		$linkdata["href"] = "https://spreadsheets.google.com/feeds/list/" . $sheetid . "/od6/public/basic?hl=en_US&alt=json-in-script";
+		$linkdata["kind"] = "google-spreadsheet";
+		$linkdata["alt"] = $name;
+		array_push($linkdatas, $linkdata);
     }
-    send_back($linkdatas, $errors, $warnings);
+    send_back($linkdatas, $errors, $warnings, $debugging);
 }
 
 function scrape_json($url, $type, $contents, $name) {
