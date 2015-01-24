@@ -17,15 +17,13 @@
     global $lightboxed_exhibit;
     $exhibitid = $_GET['exhibitid'];
     if (isset($exhibitid) && ($exhibitid != NULL)) {
-        // We are going to try to load just this one
+        // We are goiing to try to load just this one
         $lightboxed_exhibit = new WpPostExhibit();
         DbMethods::loadFromDatabase($lightboxed_exhibit, $exhibitid);
     }
     $currentview = $_GET['currentview'];
     $postid = $_GET['postid'];
-    $exhibit_html = $exhibit_html = WpExhibitHtmlBuilder::get_exhibit_html($lightboxed_exhibit, $currentview, $postid, true);
-    //echo $exhibit_html;
-    //die;
+    $exhibit_html = $exhibit_html = WpExhibitHtmlBuilder::get_exhibit_html($lightboxed_exhibit, $currentview, $postid);  
 ?>
 <html>
 <head>

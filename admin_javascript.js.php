@@ -13,10 +13,8 @@ header("Content-type: text/javascript");
 
 if (!$guessurl = site_url())
 	$guessurl = wp_guess_url();
-	$baseuri = $guessurl;
-	$exhibituri = $baseuri . '/wp-content/plugins/datapress';
-	$imageurl = $exhibituri . '/exhibit.png';
-	$footnotesurl = $exhibituri . '/footnotes.png';	
+$baseuri = $guessurl;
+$exhibituri = $baseuri . '/wp-content/plugins/datapress';
 
 print <<<EOF
 
@@ -41,10 +39,8 @@ function set_post_exhibit(exhibit_id) {
 
 // send html to the post editor
 function add_exhibit_token_and_exit() {
-	var imagestring = "<img src='$imageurl' alt='Your Exhibit' height='70' width='70'/>";	
-	var footstring = "<img src='$footnotesurl' alt='Your Footnotes' height='70' width = '70'/>";
-	var h = imagestring + " " + footstring;
-	var searchfor = '$imageurl';
+	var h = "{{Exhibit}}  {{Footnotes}}";
+	var searchfor = "{{Exhibit}}";
 	
 	if ( typeof tinyMCE != 'undefined' && ( ed = tinyMCE.activeEditor ) && !ed.isHidden() ) {
 		ed.focus();
