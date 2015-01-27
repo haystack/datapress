@@ -55,7 +55,9 @@ function scrape_google_spreadsheet($url, $type, $contents, $name) {
 		$linkdata = array();
 		if(!$matched){
 			//needs extra data to indicate desired sheet request
-			$linkdata["href"] = "https://spreadsheets.google.com/feeds/list/" . $ids2[1][0] . "/od6/public/basic?hl=en_US&alt=json-in-script";
+			$linkdata["multisheet"] = true;
+			$linkdata["key"] = $ids2[1][0];
+			$linkdata["sheets_xml"] = file_get_contents("http://spreadsheets.google.com/feeds/worksheets/" . $ids2[1][0] . "/public/full");
 		} else {
 			$linkdata["href"] = "https://spreadsheets.google.com/feeds/list/" . $ids[1][0] . "/od6/public/basic?hl=en_US&alt=json-in-script";
 		}
