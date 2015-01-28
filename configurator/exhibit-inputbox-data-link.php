@@ -177,7 +177,7 @@ $exhibituri = $baseuri . '/wp-content/plugins/datapress';
         var link_kind = select.getAttribute('data-kind');
         var link_uri = 'https://spreadsheets.google.com/feeds/list/' + select.getAttribute('data-key') + '/' + select.options[select.selectedIndex].value + '/public/basic?hl=en_US&alt=json-in-script';
         var link_sourcename = select.getAttribute('data-sourcename');
-        document.getElementById('id').select.length = 0;
+        select.innerHTML="";
         document.getElementById('exhibit-worksheet-selection').style.display = 'none';
         add_datasource_link(link_kind, link_uri, link_sourcename, 'remote');
     }
