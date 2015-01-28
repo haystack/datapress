@@ -31,7 +31,20 @@ $exhibituri = $baseuri . '/wp-content/plugins/datapress';
 </table>
 <p align="right">
     <!-- <a id="#upload_button" href="#" class="addlink">Upload File</a> -->
-    <a href="#" class="addlink" onclick="submit_data_link(); return false">Add Data Link</a></p>
+    <a href="#" class="addlink" onclick="submit_data_link(); return false">Add Data Link</a>
+</p>
+<div id="exhibit-worksheet-selection" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; display: inline; background-color: rgba(0, 0, 0, 0.6); display:none;">
+    <div style="border:2px solid #99CC66; border-radius:4px; position:absolute; top:0; left:0; right:0; bottom:0; margin:auto; width: 50%; height:5em; padding:10px; background-color:#FFFFFF;">
+        Your Spreadsheet contained multiple sheets. Please select which sheet you would like to use:
+        <br>
+        <select id="exhibit-worksheet-selection-dropdown" data-kind="google-spreadsheet" data-sourcename="test" data-key="1mbYtgzvP0Zv7Glc7pBjV3FBj2EIflPY37URRsfSikVQ" style="display:inline-block">
+        </select>
+        <div style="display:inline-block; position:absolute; padding:4px; border:1px solid black; background-color:#f5f5f5; font-weight:bold; margin:.1em 0 0 1em" onclick="select_sheet()">
+            Select this sheet
+        </div>
+    </div>
+</div>
+
 
 <script type="text/JavaScript">
 
@@ -62,7 +75,7 @@ $exhibituri = $baseuri . '/wp-content/plugins/datapress';
     function add_datasource_link(kind, uri, sourcename, where) {
         var remove_id = addExhibitElementLink(
             "data-source-list",
-            kind_for(kind) + ": " + sourcename + " (<a href='" + uri + "'>view data</a>)",
+            kind_for(kind) + ": " + sourcename + " (<a target='_blank' href='" + uri + "'>view data</a>)",
             'data',
             {
                 kind: kind,
@@ -112,14 +125,15 @@ $exhibituri = $baseuri . '/wp-content/plugins/datapress';
                 // Process Links
                 if (json.links) {
                     for (var i = 0; i < json.links.length; i++) {
-                        if (typeof json.links[i].multisheet != "undefined") {
-                            var link_uri = choose_sheet(json.links[i].sheets_xml, json.links[i].key)
-                        } else {
-                            var link_uri = json.links[i].href;
-                        }
                         var link_kind = json.links[i].kind;
                         var link_sourcename = json.links[i].alt;
-                        add_datasource_link(link_kind, link_uri, link_sourcename, 'remote');
+                        if (typeof json.links[i].multisheet != "undefined") {
+                            var link_uri = sheet_dropdown(json.links[i].sheets_xml, json.links[i].key, link_kind, link_sourcename);
+                        } else {
+                            var link_uri = json.links[i].href;
+                            add_datasource_link(link_kind, link_uri, link_sourcename, 'remote');
+                        }
+
                     }
                 }
             });
@@ -127,10 +141,9 @@ $exhibituri = $baseuri . '/wp-content/plugins/datapress';
 
     }
 
-    function choose_sheet(xml, key) {
-        console.log("choose_sheet is called.");
-        // scrape page for sheet names
-        var sheet_match = new RegExp(/<id>([^<>]+)<\/id>/g);
+    function sheet_dropdown(xml, key, link_kind, link_sourcename) {
+        // scrape page for sheet ids and sheet titles.
+        var sheet_match = new RegExp(/([^<>\/]+)<\/id>/g);
         var title_match = new RegExp(/<title[^>]+>([^<]+)<\/title>/g);
         var sheets = [];
         var titles = [];
@@ -140,20 +153,33 @@ $exhibituri = $baseuri . '/wp-content/plugins/datapress';
             sheets.push(match_s[1]);
             titles.push(match_t[1]);
         }
-        console.log(sheets);
-        console.log(titles);
-        // create option drop down.
-        //var option = document.createElement("OPTION");
-        //option.style.zIndex = "999";
-        //option.style.position = "absolute";
-        //option.style.margin = "auto";
-        //for(i in sheets){
-        //	option.add(i);
-        //	console.log(i);
-        //}
-        //var submit = document.createElement("BUTTON");
-        //jQuery('body').append(option);
-        return "https://spreadsheets.google.com/feeds/list/" + key + "/od6/public/basic?hl=en_US&alt=json-in-script";
+        // first entry in both lists is the full worksheet, don't care about that.
+        sheets.shift();
+        titles.shift();
+        // set options on drop down.
+        var select = document.getElementById('exhibit-worksheet-selection-dropdown');
+        select.setAttribute('data-kind', link_kind);
+        select.setAttribute('data-sourcename', link_sourcename);
+        select.setAttribute('data-key', key);
+        var option;
+        for(var i=0; i<sheets.length; i++){
+            option = document.createElement('OPTION');
+            option.text = titles[i];
+            option.value = sheets[i];
+            select.add(option);
+        }
+        document.getElementById('exhibit-worksheet-selection').style.display = 'inline';
+    }
+
+    function select_sheet(){
+        // user chose a sheet, add it
+        var select = document.getElementById('exhibit-worksheet-selection-dropdown');
+        var link_kind = select.getAttribute('data-kind');
+        var link_uri = 'https://spreadsheets.google.com/feeds/list/' + select.getAttribute('data-key') + '/' + select.options[select.selectedIndex].value + '/public/basic?hl=en_US&alt=json-in-script';
+        var link_sourcename = select.getAttribute('data-sourcename');
+        document.getElementById('id').select.length = 0;
+        document.getElementById('exhibit-worksheet-selection').style.display = 'none';
+        add_datasource_link(link_kind, link_uri, link_sourcename, 'remote');
     }
 
 </script>
