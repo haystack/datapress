@@ -31,28 +31,39 @@ function is_exhibit($type) {
 function scrape_google_spreadsheet($url, $type, $contents, $name) {
     // match: https://docs.google.com/spreadsheet/pub?key=0AnWPOdSwW93adGtnM2lEY0R1TlNxcGJPZmJ2TkRPOHc&output=html
     $pattern = "/pub\?.*key=([^&]+)/";
+	// match: https://docs.google.com/spreadsheets/d/1mbYtgzvP0Zv7Glc7pBjV3FBj2EIflPY37URRsfSikVQ/pubhtml
+	$pattern2 = "/\/d\/([^&]+)\/pubhtml/";
 
     $linkdatas = array();
     $errors = array();
     $warnings = array();
     $url = urldecode($url);
     $matched = preg_match_all($pattern, $url, $ids, PREG_PATTERN_ORDER);
-    if (!$matched) {
-	if (strpos($url, "json-in-script") === false) {
-	    array_push($warnings, "Unable to parse spreadsheet ID.  URL should be of the form https://docs.google.com/spreadsheet/pub?key=SPREADSHEET_ID&output=html");
+	$matched2 = preg_match_all($pattern2, $url, $ids2, PREG_PATTERN_ORDER);
+    if (!$matched && !$matched2) {
+		if (strpos($url, "json-in-script") === false) {
+	    	array_push($warnings, "Unable to parse spreadsheet ID.  URL should be of the form https://docs.google.com/
+	    	spreadsheet/pub?key=SPREADSHEET_ID&output=html or https://docs.google.com/spreadsheets/d/SPREADSHEET_ID/pubhtml");
         } else {
      	    $linkdata = array();
     	    $linkdata["href"] = $url;
-	    $linkdata["kind"] = "google-spreadsheet";
-	    $linkdata["alt"] = $name;
-	    array_push($linkdatas, $linkdata);        
+	    	$linkdata["kind"] = "google-spreadsheet";
+	    	$linkdata["alt"] = $name;
+			array_push($linkdatas, $linkdata);
         }
     } else {
-	$linkdata = array();
-	$linkdata["href"] = "https://spreadsheets.google.com/feeds/list/" . $ids[1][0] . "/od6/public/basic?hl=en_US&alt=json-in-script";
-	$linkdata["kind"] = "google-spreadsheet";
-	$linkdata["alt"] = $name;
-	array_push($linkdatas, $linkdata);
+		$linkdata = array();
+		if(!$matched){
+			//needs extra data to indicate desired sheet request
+			$linkdata["multisheet"] = true;
+			$linkdata["key"] = $ids2[1][0];
+			$linkdata["sheets_xml"] = file_get_contents("http://spreadsheets.google.com/feeds/worksheets/" . $ids2[1][0] . "/public/full");
+		} else {
+			$linkdata["href"] = "https://spreadsheets.google.com/feeds/list/" . $ids[1][0] . "/od6/public/basic?hl=en_US&alt=json-in-script";
+		}
+		$linkdata["kind"] = "google-spreadsheet";
+		$linkdata["alt"] = $name;
+		array_push($linkdatas, $linkdata);
     }
     send_back($linkdatas, $errors, $warnings);
 }

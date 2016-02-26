@@ -30,9 +30,7 @@ abstract class WpExhibitModel {
 		else {
 			if (! $nice) {
 				die("Attempted to get a field that does not exist: $field.");							
-      } else {
-        return null;
-      }
+			}
 		}
 	}
 	

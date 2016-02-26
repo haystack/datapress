@@ -1,6 +1,4 @@
 <?php
-global $exhibits_to_show;
-
 	if (!$guessurl = site_url())
     	$guessurl = wp_guess_url();
         $baseuri = $guessurl;

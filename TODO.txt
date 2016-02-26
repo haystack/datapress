@@ -1,0 +1,12 @@
+Upload CSV (or other things that Exhibit can use)
+
+Use pre-uploaded files (and store them)
+
+URL of data somewhere else on the web (cross-site scripting via datapress)
+
+*************************************************
+
+- How does Wordpress upload/store files?
+- What does Exhibit need for CSV files?
+- Build GUI for uploading files
+- Build GUI for using uploaded files
