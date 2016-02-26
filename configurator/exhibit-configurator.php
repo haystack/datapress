@@ -95,7 +95,7 @@ function show_datapress_html() {
 											i++;
 										}
 										try {
-										jQuery.post(<? echo("'$exhibituri/wp-exhibit-geocode.php'"); ?>,
+										jQuery.post(<?php echo("'$exhibituri/wp-exhibit-geocode.php'"); ?>,
 										{'exhibitid': data, 'datumids[]': datumIds, 'addresses[]': addresses, 'addressField': geocodeFields[key]});
 										} catch(e) {
 											console.log(e);
